@@ -12,7 +12,7 @@ export class Background extends Container {
         this.app.renderer.on("resize",this.resize,this);
     }
 
-    addBackground(){
+    addBackground(){ 
      
         this.background = Sprite.from("background");
 
@@ -26,12 +26,9 @@ export class Background extends Container {
         this.background.x = width*0.5;
         this.background.y = height*0.5;
 
-        const textureWidth = this.background.texture.width;
-        const textureHeight = this.background.texture.height;
+        const baseWidth = 1400;
 
-        const scaleX = width / textureWidth;
-        const scaleY = height / textureHeight;
-        const scale = Math.min(scaleX, scaleY);
+        const scale = Math.max(0.3,(width/baseWidth)*0.8);
         this.background.scale.set(scale);
     }
 }

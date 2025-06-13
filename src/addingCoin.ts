@@ -19,6 +19,6 @@ export class Coin{
 
         coin.anchor.set(0.5);
 
-        coin.scale.set(0.6);
+        coin.scale.set(0.6); 
     }
 }

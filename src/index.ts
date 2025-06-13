@@ -1,4 +1,4 @@
-import { Application,Assets,Container} from "pixi.js";
+import { Application,Assets} from "pixi.js";
 import {Background} from "./addingBackground.ts";
 import {Coin} from "./addingCoin.ts";
 import { HeadButton } from "./addingHeadButton.ts";
@@ -25,14 +25,16 @@ class Coinflip{
 
     async preload(){
         const assets = [
-            { alias: "background", src: "public/headsTails/back.jpg" },
-            {alias: "coinAtlas", src: "public/headsTails/coin1_00000.png"},
-            {alias: "tailButton", src:"public/buttons/buttonLeft.png"},
-            {alias: "headButton", src:"public/buttons/buttonRight.png"},
-            {alias:"tails" ,src:"public/headsTails/tail.png"},
-            {alias:"heads", src:"public/headsTails/head.png"},
-            {alias:"tailButtonHighlight" , src:"public/buttons/buttonLeftHighlight.png"},
-            {alias:"headButtonHighlight" , src:"public/buttons/buttonRightHighlight.png"},
+            { alias: "background", src: "/headsTails/back.jpg" },
+            {alias: "coinAtlas", src: "/headsTails/coin1_00000.png"},
+            {alias: "tailButton", src:"/buttons/buttonLeft.png"},
+            {alias: "headButton", src:"/buttons/buttonRight.png"},
+            {alias:"tails" ,src:"/headsTails/tail.png"},
+            {alias:"heads", src:"/headsTails/head.png"},
+            {alias:"tailButtonHighlight" , src:"/buttons/buttonLeftHighlight.png"},
+            {alias:"headButtonHighlight" , src:"/buttons/buttonRightHighlight.png"},
+            {alias:"tailButtonHitArea", src:"/buttons/buttonLeftHitArea.png"},
+            {alias:"headButtonHitArea", src:"/buttons/buttonRightHitArea.png"}
         ];
         await Assets.load(assets);
     }
