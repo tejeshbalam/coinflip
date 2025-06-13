@@ -1,13 +1,30 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Vite + React + TS</title>
-  </head>
-  <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.tsx"></script>
-  </body>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+  />
+    <title>coinflip</title>
+    <link rel="stylesheet" href="style.css" /> 
+</head>
+<body> 
+    <div id="coin-flip-main">
+        <div id="coin-flip-container">
+
+        </div>
+        <nav id="nav-coin-flip">
+            <div id="nav-home">
+                <i class="fa-solid fa-house " id="home-icon"></i>
+            </div>
+            <div id="nav-sound-menu">
+                <i class="fa-solid fa-volume-low" id="sound-icon"></i>
+                <i class="fa-solid fa-bars" id="menu-icon"></i>
+            </div>
+        </nav>
+    </div>
+    <script type="module" src="./src/index.ts"></script>
+</body>
 </html>
