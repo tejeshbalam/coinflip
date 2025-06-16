@@ -1,4 +1,7 @@
-import { Application, Container, Sprite } from "pixi.js";
+import { Application, Container, Sprite , Text,TextStyle} from "pixi.js";
+import type { Coin, CoinResult } from "./addingCoin.ts";
+import { Betpanel } from "./addingBet.ts";
+import { Balance } from "./addingBalance.ts";
 
 export class HeadButton {
     app : Application;
@@ -7,10 +10,18 @@ export class HeadButton {
     headsImage : Sprite;
     headHiglightButton : Sprite;
     headButtonHitArea : Sprite;
+    headText: Text;
+    textStyle: TextStyle;
+    coin : Coin;
+    bet : Betpanel;
+    balance : Balance;
 
-    constructor(app:Application){
+    constructor(app:Application, coin: Coin, balance : Balance, bet : Betpanel){
         
         this.app = app;
+        this.coin = coin;
+        this.balance = balance;
+        this.bet = bet;
         this.headsButtonContainer = new Container();
         this.app.stage.addChild(this.headsButtonContainer); 
         
@@ -49,6 +60,17 @@ export class HeadButton {
         this.headHiglightButton.x = -this.headsButtonContainer.width/3;
         this.headHiglightButton.visible = false;
 
+        this.textStyle = new TextStyle({
+            fill:"#ffffff",
+            align:"center",
+            fontSize : 32,
+        })
+        this.headText = new Text("HEADS",this.textStyle);
+        this.headsButtonContainer.addChild(this.headText);
+        this.headText.x=-this.headsButtonContainer.width*0.4;
+        this.headText.y= this.headsButtonContainer.height*0.1;
+
+
         this.headButtonHitArea.on("pointerover",() => {
             this.headHiglightButton.visible = true;
         })
@@ -56,6 +78,21 @@ export class HeadButton {
         this.headButtonHitArea.on("pointerout", () => {
             this.headHiglightButton.visible = false;
         })
+
+        this.headButtonHitArea.on("pointerdown", () => {
+            // const betAmount = this.bet.getBetAmount();
+            const currentBalance = this.balance.getBalance();
+
+            this.coin.flip("head");
+
+            this.coin.onFlipComplete = (result: CoinResult, user: CoinResult) => {
+                if (result === user) {
+                    this.balance.updateBalance(currentBalance + 1);
+                } else {
+                    this.balance.updateBalance(currentBalance - 1);
+                }
+            };
+        });
                 
         this.headsButtonContainer.y = this.app.screen.height*0.5;
         this.headsButtonContainer.x = this.app.screen.width;

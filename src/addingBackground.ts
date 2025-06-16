@@ -13,6 +13,7 @@ export class Background extends Container {
     }
 
     addBackground(){ 
+        this.app.stage.sortableChildren = true;
      
         this.background = Sprite.from("background");
 
@@ -21,6 +22,7 @@ export class Background extends Container {
         this.addChild(this.background);
         
     }
+    
     resize(){
         const {width,height} = this.app.renderer;
         this.background.x = width*0.5;
@@ -30,5 +32,6 @@ export class Background extends Container {
 
         const scale = Math.max(0.3,(width/baseWidth)*0.8);
         this.background.scale.set(scale);
+        this.background.zIndex = -2;
     }
 }

@@ -1,4 +1,7 @@
-import { Application, Container,Sprite } from "pixi.js";
+import { Application, Container,Sprite,Text,TextStyle } from "pixi.js";
+import type { Coin, CoinResult} from "./addingCoin";
+import { Betpanel } from "./addingBet";
+import { Balance } from "./addingBalance";
 
 export class TailButton {
     app : Application;
@@ -7,10 +10,18 @@ export class TailButton {
     tailsImage : Sprite;
     tailsHighlightButton : Sprite;
     tailButtonHitArea : Sprite;
+    tailText : Text;
+    tailTextStyle : TextStyle;
+    coin : Coin;
+    bet : Betpanel;
+    balance : Balance;
 
-    constructor(app:Application){
+    constructor(app:Application,coin:Coin,balance : Balance, bet : Betpanel){
         
         this.app = app;
+        this.coin = coin;
+        this.balance = balance;
+        this.bet = bet;
         this.tailsButtonContainer = new Container();
         this.app.stage.addChild(this.tailsButtonContainer);
         this.tailsButtonContainer.pivot.set(0.5);
@@ -47,12 +58,37 @@ export class TailButton {
         this.tailsHighlightButton.x = this.tailsButtonContainer.width/3;
         this.tailsHighlightButton.visible = false;
 
+        this.tailTextStyle = new TextStyle({
+            fontSize:32,
+            fill:"#ffffff",
+            align:"center",
+        })
+        this.tailText = new Text("TAILS", this.tailTextStyle);
+        this.tailsButtonContainer.addChild(this.tailText);
+        this.tailText.x = this.tailsButtonContainer.width*0.1;
+        this.tailText.y = this.tailsButtonContainer.height*0.1;
+
         this.tailButtonHitArea.on("pointerover", () => {
             this.tailsHighlightButton.visible = true;
         });
 
         this.tailButtonHitArea.on("pointerout", () => {
             this.tailsHighlightButton.visible = false;
+        });
+
+        this.tailButtonHitArea.on("pointerdown", () => {
+            // const betAmount = this.bet.getBetAmount();
+            const currentBalance = this.balance.getBalance();
+
+            this.coin.flip("tail");
+
+            this.coin.onFlipComplete = (result: CoinResult, user: CoinResult) => {
+                if (result === user) {
+                    this.balance.updateBalance(currentBalance + 1);
+                } else {
+                    this.balance.updateBalance(currentBalance - 1);
+                }
+            };
         });
 
         this.tailsButtonContainer.y = this.app.screen.height*0.5;
