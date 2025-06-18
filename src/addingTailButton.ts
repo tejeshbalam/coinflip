@@ -2,6 +2,7 @@ import { Application, Container,Sprite,Text,TextStyle } from "pixi.js";
 import type { Coin, CoinResult} from "./addingCoin";
 import { Betpanel } from "./addingBet";
 import { Balance } from "./addingBalance";
+import { SoundManager } from "./addingSound";
 
 export class TailButton {
     app : Application;
@@ -15,13 +16,15 @@ export class TailButton {
     coin : Coin;
     bet : Betpanel;
     balance : Balance;
+    sound : SoundManager;
 
-    constructor(app:Application,coin:Coin,balance : Balance, bet : Betpanel){
+    constructor(app:Application,coin:Coin,balance : Balance, bet : Betpanel, sound : SoundManager){
         
         this.app = app;
         this.coin = coin;
         this.balance = balance;
         this.bet = bet;
+        this.sound = sound;
         this.tailsButtonContainer = new Container();
         this.app.stage.addChild(this.tailsButtonContainer);
         this.tailsButtonContainer.pivot.set(0.5);
@@ -85,6 +88,7 @@ export class TailButton {
             this.coin.onFlipComplete = (result: CoinResult, user: CoinResult) => {
                 if (result === user) {
                     this.balance.updateBalance(currentBalance + 1);
+                    this.sound.playWin();
                 } else {
                     this.balance.updateBalance(currentBalance - 1);
                 }

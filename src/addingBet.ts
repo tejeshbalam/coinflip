@@ -40,7 +40,7 @@ export class Betpanel {
         this.betText.x =  this.betContainer.width*0.5;
         this.betText.y =  this.betContainer.height*0.3;
 
-        this.betAmount = new Text("1 FUN",this.betTextStyle);
+        this.betAmount = new Text("1",this.betTextStyle);
         this.betContainer.addChild(this.betAmount);
         this.betAmount.x =  this.betContainer.width*0.5;
         this.betAmount.y =  this.betContainer.height*0.6;

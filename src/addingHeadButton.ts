@@ -2,6 +2,7 @@ import { Application, Container, Sprite , Text,TextStyle} from "pixi.js";
 import type { Coin, CoinResult } from "./addingCoin.ts";
 import { Betpanel } from "./addingBet.ts";
 import { Balance } from "./addingBalance.ts";
+import { SoundManager } from "./addingSound.ts";
 
 export class HeadButton {
     app : Application;
@@ -15,13 +16,15 @@ export class HeadButton {
     coin : Coin;
     bet : Betpanel;
     balance : Balance;
+    sound : SoundManager;
 
-    constructor(app:Application, coin: Coin, balance : Balance, bet : Betpanel){
+    constructor(app:Application, coin: Coin, balance : Balance, bet : Betpanel,sound: SoundManager){
         
         this.app = app;
         this.coin = coin;
         this.balance = balance;
         this.bet = bet;
+        this.sound = sound;
         this.headsButtonContainer = new Container();
         this.app.stage.addChild(this.headsButtonContainer); 
         
@@ -88,6 +91,7 @@ export class HeadButton {
             this.coin.onFlipComplete = (result: CoinResult, user: CoinResult) => {
                 if (result === user) {
                     this.balance.updateBalance(currentBalance + 1);
+                    this.sound.playWin();
                 } else {
                     this.balance.updateBalance(currentBalance - 1);
                 }

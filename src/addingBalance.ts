@@ -36,12 +36,12 @@ export class Balance {
             fill:"#ffffff",
             align:"center",
         });
-        this.balanceText = new Text("Balance",this.balanceTextStyle);
+        this.balanceText = new Text("Amount",this.balanceTextStyle);
         this.balanceContainer.addChild(this.balanceText);
         this.balanceText.x = this.balanceContainer.width*0.25;
         this.balanceText.y = this.balanceContainer.height*0.35;
         
-        this.balanceAmount = new Text("1000.00 FUN",this.balanceTextStyle);
+        this.balanceAmount = new Text("1000.00",this.balanceTextStyle);
         this.balanceContainer.addChild(this.balanceAmount);
         this.balanceAmount.x = this.balanceContainer.width*0.25;
         this.balanceAmount.y = this.balanceContainer.height*0.6;
@@ -54,7 +54,7 @@ export class Balance {
 
     updateBalance(newAmount: number) {
         this.currentBalance = newAmount;
-        this.balanceAmount.text = `${this.currentBalance}.00 FUN`
+        this.balanceAmount.text = `${this.currentBalance}.00`
     }
 
     getBalance(): number {

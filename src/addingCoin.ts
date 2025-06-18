@@ -1,4 +1,5 @@
 import { Application, Container , Texture, AnimatedSprite} from "pixi.js";
+import { SoundManager } from "./addingSound";
 
 export type CoinResult = "head" | "tail";
 
@@ -10,10 +11,11 @@ export class Coin{
     userChoice: CoinResult = "head";
     finalFrame : number = 30;
     frames: Texture[] = [];
+    sound : SoundManager;
 
-    constructor(app:Application){
+    constructor(app:Application, sound : SoundManager){
         this.app = app;
-
+        this.sound = sound;
         this.coinContainer = new Container();
         this.app.stage.addChild(this.coinContainer);
 
@@ -36,9 +38,11 @@ export class Coin{
 
         this.coin.onComplete = () => {
             
+            this.sound.stopRotation();
             this.coin.gotoAndStop(this.finalFrame);
             const result: CoinResult = this.finalFrame === 30 ? "head" : "tail";
 
+            this.sound.playStop();
             this.onFlipComplete?.(result, this.userChoice);
         };
 
@@ -50,8 +54,8 @@ export class Coin{
         this.finalFrame = Math.random() < 0.5 ? 30 : 0;
 
         const spinFrames : Texture [] = [];
-        const spins = 3;
-
+        const spins = 10;
+                
         for (let i=0; i<spins;i++){
             spinFrames.push(...this.frames);
         }
@@ -60,6 +64,7 @@ export class Coin{
 
         this.coin.textures = spinFrames;
         this.coin.gotoAndPlay(0);
+        this.sound.playRotation();
   }
     
     resize(){

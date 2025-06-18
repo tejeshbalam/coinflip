@@ -6,6 +6,7 @@ import { TailButton } from "./addingTailButton.ts";
 import { Balance } from "./addingBalance.ts"; 
 import { Betpanel } from "./addingBet.ts";
 import { Panelbackground } from "./addingPanelbg.ts";
+import { SoundManager } from "./addingSound.ts";
 
 class Coinflip{
     app:Application;
@@ -50,14 +51,17 @@ class Coinflip{
     }
 
     async initializeGame(){
+
+        const sound = new SoundManager();
         const background = new Background(this.app);
         this.app.stage.addChild(background);
-        const coin = new Coin(this.app);
+        new Panelbackground(this.app);
+        const coin = new Coin(this.app,sound);
         const balance = new Balance(this.app);
         const bet = new Betpanel(this.app);
-        new HeadButton(this.app,coin,balance,bet);
-        new TailButton(this.app,coin,balance,bet);
-        new Panelbackground(this.app);
+        new HeadButton(this.app,coin,balance,bet,sound);
+        new TailButton(this.app,coin,balance,bet,sound);
+        
         
     }
 }

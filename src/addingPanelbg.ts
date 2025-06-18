@@ -44,7 +44,7 @@ export class Panelbackground {
         const scale = Math.max(0.2,(width/baseWidth));
         
         this.panelBackgroundContainer.scale.set(scale);
-        this.panelBackgroundContainer.zIndex = -1;
+        //this.panelBackgroundContainer.zIndex = -1;
 
         this.panelBackgroundContainer.x = 0;
         this.panelBackgroundContainer.y = this.app.screen.height - this.panelBackgroundContainer.height;
