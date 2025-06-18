@@ -32,7 +32,7 @@ export class Coin{
 
         this.coin = new AnimatedSprite(this.frames);
         this.coin.anchor.set(0.5);
-        this.coin.animationSpeed = 5;
+        this.coin.animationSpeed = 4;
         this.coin.loop = false;
         this.coin.scale.set(0.9);
 
@@ -54,7 +54,7 @@ export class Coin{
         this.finalFrame = Math.random() < 0.5 ? 30 : 0;
 
         const spinFrames : Texture [] = [];
-        const spins = 10;
+        const spins = 7;
                 
         for (let i=0; i<spins;i++){
             spinFrames.push(...this.frames);
