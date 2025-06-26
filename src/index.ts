@@ -8,23 +8,24 @@ import { Betpanel } from "./addingBet.ts";
 import { Panelbackground } from "./addingPanelbg.ts";
 import { SoundManager } from "./addingSound.ts";
 
-class Coinflip{
+export class Coinflip{
     app:Application;
-    coinFlipContainer:HTMLElement;
+    //coinFlipContainer:HTMLElement;
 
-    applicationInit(){ 
-        const containerElemnt = document.getElementById("coin-flip-container");
-        if(!containerElemnt){
-            throw new Error("element not found");
-        }
+    applicationInit(container: HTMLElement ){ 
+        // const containerElemnt = document.getElementById("coin-flip-container");
+        // if(!containerElemnt){
+        //     throw new Error("element not found");
+        // }
 
-        this.coinFlipContainer = containerElemnt;
+        // this.coinFlipContainer = containerElemnt;
         this.app = new Application({
-            resizeTo:this.coinFlipContainer,
+            resizeTo:container,
         });
 
         globalThis.__PIXI_APP__ = this.app;
-        this.coinFlipContainer.appendChild(this.app.view as HTMLCanvasElement);
+        //this.coinFlipContainer.appendChild(this.app.view as HTMLCanvasElement);
+        container.appendChild(this.app.view as HTMLCanvasElement);
     }
 
     async preload(){
@@ -65,9 +66,3 @@ class Coinflip{
         
     }
 }
-
-const coinFlipApplication = new Coinflip();
-coinFlipApplication.applicationInit();
-coinFlipApplication.preload().then(() => {
-    coinFlipApplication.initializeGame();
-  });
