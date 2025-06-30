@@ -1,4 +1,3 @@
-import React from "react";
 import { useEffect, useRef } from "react";
 import { Coinflip } from "../index";
 import "../style.css";
@@ -23,7 +22,7 @@ const Home = () => {
         id="coin-flip-container"
         style={{ width: "100vw", height: "100vh", overflow: "hidden" }}
       ></div>
-      {/* <nav id="nav-coin-flip">
+      <nav id="nav-coin-flip">
         <div id="nav-home">
           <i className="fa-solid fa-house" id="home-icon"></i>
         </div>
@@ -31,7 +30,7 @@ const Home = () => {
           <i className="fa-solid fa-volume-low" id="sound-icon"></i>
           <i className="fa-solid fa-bars" id="menu-icon"></i>
         </div>
-      </nav> */}
+      </nav>
     </div>
   );
 };

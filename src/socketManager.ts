@@ -1,8 +1,9 @@
 import { io,Socket } from "socket.io-client";
 
 
-export class SoundManager{
+export class Socketmanager{
     socket : Socket
+    balanceAmount : number;
 
     constructor(){
 
@@ -13,17 +14,14 @@ export class SoundManager{
         this.socket.on("connect",()=>{
             console.log("server connected")
         })
+
+        this.socket.on("bet_info",(data) => {
+            this.balanceAmount = data.balance;
+        })
     }
 
-    sendBet(choice : number, btAmt : number){
-        this.socket.emit("bt",{choice,btAmt})
-    };
-
-    onInfo(userInfo: (data:{user_id:number,operator_id:number, balance:number}) => void){
-        this.socket.on("info",userInfo)
-    }
-
-    onResult(betResults:(data:{status:"win"| "loss",winAmt:number,mult:number}) => void){
-        this.socket.on("result",betResults)
+    on(event: string, callback: (...args: any[]) => void) {
+        this.socket.on(event, callback);
     }
 }
+

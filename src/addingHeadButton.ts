@@ -3,6 +3,8 @@ import type { Coin, CoinResult } from "./addingCoin.ts";
 import { Betpanel } from "./addingBet.ts";
 import { Balance } from "./addingBalance.ts";
 import { SoundManager } from "./addingSound.ts";
+import { Socketmanager } from "./socketManager.ts";
+import { Popup } from "./addingPopups.ts";
 
 export class HeadButton {
     app : Application;
@@ -17,14 +19,21 @@ export class HeadButton {
     bet : Betpanel;
     balance : Balance;
     sound : SoundManager;
+    socket : Socketmanager;
 
-    constructor(app:Application, coin: Coin, balance : Balance, bet : Betpanel,sound: SoundManager){
+    constructor(app:Application,
+        coin: Coin, 
+        balance : Balance, 
+        bet : Betpanel,
+        sound : SoundManager,
+        socket : Socketmanager){
         
         this.app = app;
         this.coin = coin;
         this.balance = balance;
         this.bet = bet;
         this.sound = sound;
+        this.socket = socket;
         this.headsButtonContainer = new Container();
         this.app.stage.addChild(this.headsButtonContainer); 
         
@@ -83,19 +92,35 @@ export class HeadButton {
         })
 
         this.headButtonHitArea.on("pointerdown", () => {
-            // const betAmount = this.bet.getBetAmount();
+            const betAmount = this.bet.getBetAmount();
             const currentBalance = this.balance.getBalance();
 
-            this.coin.flip("head");
+            if (betAmount > currentBalance) {
+                //alert("insufficent balance");
+                new Popup(this.app,"Insufficent Balance")
+            }
+            else if (betAmount > 20000 || betAmount < 20) {
+                //alert ("Bet Amount will be 20-20000");
+                new Popup(this.app,"Bet Amount will be 20-20000")
+            }
+            else {
+                this.balance.updateBalance(this.balance.getBalance()-betAmount);
 
-            this.coin.onFlipComplete = (result: CoinResult, user: CoinResult) => {
-                if (result === user) {
-                    this.balance.updateBalance(currentBalance + 1);
-                    this.sound.playWin();
-                } else {
-                    this.balance.updateBalance(currentBalance - 1);
+                this.coin.flip("head");
+
+                this.coin.onFlipComplete = (result: CoinResult, user: CoinResult) => {
+                    if (result === user) {
+                        this.balance.updateBalance(this.balance.getBalance() + betAmount);
+                        this.sound.playWin();
+                        new Popup(this.app,"You Win");
+                    } else {
+                        // this.balance.updateBalance(currentBalance - betAmount);
+                        //alert("lose bet");
+                        new Popup(this.app,"you Lose");
+                    }
                 }
-            };
+            }
+            
         });
                 
         this.headsButtonContainer.y = this.app.screen.height*0.5;

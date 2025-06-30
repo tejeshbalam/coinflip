@@ -1,4 +1,5 @@
 import {Application,Sprite,Container,Text,TextStyle} from "pixi.js";
+import { Socketmanager } from "./socketManager";
 
 export class Balance {
     app:Application;
@@ -8,10 +9,12 @@ export class Balance {
     balanceText : Text;
     balanceTextStyle : TextStyle;
     balanceAmount : Text;
+    socket : Socketmanager;
     currentBalance : number = 1000;
 
-    constructor(app:Application){
+    constructor(app:Application,socket : Socketmanager){
         this.app = app;
+        this.socket = socket;
         this.balanceContainer = new Container();
         this.app.stage.addChild(this.balanceContainer);
 
@@ -58,6 +61,8 @@ export class Balance {
     }
 
     getBalance(): number {
+        this.currentBalance = this.socket.balanceAmount;
+        console.log(this.socket.balanceAmount);
         return this.currentBalance;
     }
 
