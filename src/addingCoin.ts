@@ -194,14 +194,14 @@ import { SoundManager } from "./addingSound";
 import { Socketmanager } from "./socketManager";
 import gsap from "gsap";
 
-export type CoinResult = "head" | "tail";
+export type CoinResult = 0 | 1;
 
 export class Coin {
     app: Application;
     coinContainer: Container;
     coin: AnimatedSprite;
     onFlipComplete?: (actualResult: CoinResult, userChoice: CoinResult) => void;
-    userChoice: CoinResult = "head";
+    userChoice: CoinResult;
     finalFrame: number = 30;
     frames: Texture[] = [];
     sound: SoundManager;
@@ -252,7 +252,7 @@ export class Coin {
             this.coin.gotoAndPlay(0);
 
             const duration = flipFrames.length / this.coin.animationSpeed / 60;
-            const result: CoinResult = center === 30 ? "head" : "tail";
+            const result: CoinResult = center === 30 ? 1 : 0;
 
             const completeOnce = () => {
                 if (!this.isFlipping) return;
@@ -280,8 +280,14 @@ export class Coin {
         this.isFlipping = true;
         this.coin.animationSpeed = 4;
         this.userChoice = choice;
-        this.finalFrame = Math.random() < 0.5 ? 30 : 0;
 
+       // this.finalFrame = Math.random() < 0.5 ? 30 : 0;
+        
+        this.socket.socket.on("result",() => {
+            
+        })
+
+        this.finalFrame  = 30;
         const spinFrames: Texture[] = [];
         const spins = 7;
 

@@ -10,7 +10,7 @@ export class Balance {
     balanceTextStyle : TextStyle;
     balanceAmount : Text;
     socket : Socketmanager;
-    currentBalance : number = 1000;
+    currentBalance : number = 0 ;
 
     constructor(app:Application,socket : Socketmanager){
         this.app = app;
@@ -44,7 +44,7 @@ export class Balance {
         this.balanceText.x = this.balanceContainer.width*0.25;
         this.balanceText.y = this.balanceContainer.height*0.35;
         
-        this.balanceAmount = new Text("1000.00",this.balanceTextStyle);
+        this.balanceAmount = new Text(`${this.currentBalance}.00`,this.balanceTextStyle);
         this.balanceContainer.addChild(this.balanceAmount);
         this.balanceAmount.x = this.balanceContainer.width*0.25;
         this.balanceAmount.y = this.balanceContainer.height*0.6;
@@ -61,8 +61,8 @@ export class Balance {
     }
 
     getBalance(): number {
+        console.log(this.currentBalance);
         this.currentBalance = this.socket.balanceAmount;
-        console.log(this.socket.balanceAmount);
         return this.currentBalance;
     }
 

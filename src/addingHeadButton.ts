@@ -106,11 +106,16 @@ export class HeadButton {
             else {
                 this.balance.updateBalance(this.balance.getBalance()-betAmount);
 
-                this.coin.flip("head");
+                this.coin.flip(1);
+
+                this.socket.socket.emit("bt", {
+                    type: 1,
+                    amount: betAmount
+                });
 
                 this.coin.onFlipComplete = (result: CoinResult, user: CoinResult) => {
                     if (result === user) {
-                        this.balance.updateBalance(this.balance.getBalance() + betAmount);
+                        this.balance.updateBalance(this.balance.getBalance() + betAmount*2);
                         this.sound.playWin();
                         new Popup(this.app,"You Win");
                     } else {

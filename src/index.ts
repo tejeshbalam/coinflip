@@ -11,6 +11,7 @@ import { Socketmanager } from "./socketManager.ts";
 
 export class Coinflip{
     app:Application;
+    public betPanel:Betpanel;
     //coinFlipContainer:HTMLElement;
 
     applicationInit(container: HTMLElement ){ 
@@ -64,10 +65,14 @@ export class Coinflip{
 
         const coin = new Coin(this.app,sound,socket);
         const balance = new Balance(this.app,socket);
-        const bet = new Betpanel(this.app,socket);
+        this.betPanel = new Betpanel(this.app,socket);
 
-        new HeadButton(this.app,coin,balance,bet,sound,socket);
-        new TailButton(this.app,coin,balance,bet,sound,socket);
+        socket.setBalanceUpdateCallback((newBalance) => {
+            balance.updateBalance(newBalance);
+        });
+
+        new HeadButton(this.app,coin,balance,this.betPanel,sound,socket);
+        new TailButton(this.app,coin,balance,this.betPanel,sound,socket);
         
         
     }

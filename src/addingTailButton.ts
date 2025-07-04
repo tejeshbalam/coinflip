@@ -97,7 +97,12 @@ export class TailButton {
             }
             else{
                 this.balance.updateBalance(this.balance.getBalance() - betAmount);
-                this.coin.flip("tail");
+                this.coin.flip(0);
+
+                this.socket.socket.emit("bt", {
+                    type: 0,
+                    amount: betAmount
+                });
 
                 this.coin.onFlipComplete = (result: CoinResult, user: CoinResult) => {
                     if (result === user) {

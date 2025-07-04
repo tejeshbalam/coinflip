@@ -59,7 +59,6 @@ export class Betpanel {
     }
 
     getBetAmount(): number {
-        this.betPlaceAmount = 19;
         return this.betPlaceAmount;
     }
 
